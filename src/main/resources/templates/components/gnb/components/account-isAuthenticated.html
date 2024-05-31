@@ -31,6 +31,7 @@
     <div class="modal-background" onclick="hideSignupModal()"></div>
     <div class="modal-container">
       <div class="title" >회원가입</div>
+
       <form th:action="@{/user/signup}" method="post">
         <div class="input-container">
           <div class="input-title">아이디</div>
@@ -38,7 +39,7 @@
         </div>
         <div class="input-container">
           <div class="input-title">이메일</div>
-          <input type="email" name="비밀번호 확인" id="signup-email" class="form-control" placeholder="이메일을 입력하세요.">
+          <input type="email" name="email" id="signup-email" class="form-control" placeholder="이메일을 입력하세요.">
         </div>
         <div class="input-container">
           <div class="input-title">비밀번호</div>
@@ -46,17 +47,17 @@
         </div>
         <div class="input-container">
           <div class="input-title">비밀번호 확인</div>
-          <input type="password" name="password" id="signup-password2" class="form-control" placeholder="비밀번호를 확인하세요.">
+          <input type="password" name="password2" id="signup-password2" class="form-control" placeholder="비밀번호를 확인하세요.">
         </div>
         <div class="action-group">
           <button type="submit" style="border: none; height: 40px;">회원가입</button>
-          <div class="go-login" style="
-    margin-top: 14px;
-    color: #cbcbcb; ">계정이 있으신가요?
+          <div class="go-login" style="margin-top: 14px; color: #cbcbcb;">계정이 있으신가요?
             <a href="#" onclick="showLoginModal(); hideSignupModal();" style=" text-decoration: none; color: black;">로그인</a>
           </div>
         </div>
       </form>
+
+
     </div>
   </div>
   <script>

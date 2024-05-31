@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RequiredArgsConstructor
 @Controller
@@ -30,14 +31,25 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public String signup(@Valid UserCreateForm userCreateForm, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "signup_form";
-        }
+    public String signup(@Valid UserCreateForm userCreateForm, BindingResult bindingResult, @RequestParam("username") String username,
+                         @RequestParam("email") String email,
+                         @RequestParam("password") String password,
+                         @RequestParam("password2") String password2) {
+
+        userCreateForm.setUsername(username);
+        userCreateForm.setPassword1(password);
+        userCreateForm.setPassword2(password2);
+        userCreateForm.setEmail(email);
+
+//        if (bindingResult.hasErrors()) {
+//            System.out.println("해스애러 불일치");
+//            return "signup_form";
+//        }
 
         if (!userCreateForm.getPassword1().equals(userCreateForm.getPassword2())) {
             bindingResult.rejectValue("password2", "passwordInCorrect",
                     "2개의 패스워드가 일치하지 않습니다.");
+            System.out.println("패스워드 불일치");
             return "signup_form";
         }
 
@@ -47,10 +59,12 @@ public class UserController {
         }catch(DataIntegrityViolationException e) {
             e.printStackTrace();
             bindingResult.reject("signupFailed", "이미 등록된 사용자입니다.");
+            System.out.println("이미등록");
             return "signup_form";
         }catch(Exception e) {
             e.printStackTrace();
             bindingResult.reject("signupFailed", e.getMessage());
+            System.out.println("signupFailed");
             return "signup_form";
         }
 
